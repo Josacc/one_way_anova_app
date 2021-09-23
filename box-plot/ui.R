@@ -3,23 +3,31 @@ library(shiny)
 library(readxl)
 library(plotly)
 
-# Define UI for application that draws a histogram
+
 shinyUI(fluidPage(
 
-    # Application title
-    titlePanel("Old Faithful Geyser Data"),
+    titlePanel("Box plot"),
 
-    # Sidebar with a slider input for number of bins
     sidebarLayout(
         sidebarPanel(
-            sliderInput("bins",
-                        "Number of bins:",
-                        min = 1,
-                        max = 50,
-                        value = 30)
+
+            fileInput("archivo" ,
+                      'Selecionar archivo ".xlsx"' ,
+                      accept = ".xlsx") ,
+
+            numericInput("n_hoja" ,
+                         "Número de hoja" ,
+                         value = 2 ,
+                         min = 2 ,
+                         max = 7) ,
+
+            numericInput("n_col" ,
+                         "Número de columna" ,
+                         value = 2 ,
+                         min = 2 ,
+                         max = 7)
         ),
 
-        # Show a plot of the generated distribution
         mainPanel(
             plotOutput("distPlot")
         )
