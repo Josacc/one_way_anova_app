@@ -1,25 +1,31 @@
-#
-# This is the server logic of a Shiny web application. You can run the
-# application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-
+library(tidyverse)
 library(shiny)
+library(readxl)
+library(plotly)
 
-# Define server logic required to draw a histogram
+
+
 shinyServer(function(input, output) {
 
-    output$distPlot <- renderPlot({
+    hoja <- function(documento , n_hoja){
+        (documento %>%
+             excel_sheets())[n_hoja]
+    }
 
-        # generate bins based on input$bins from ui.R
-        x    <- faithful[, 2]
-        bins <- seq(min(x), max(x), length.out = input$bins + 1)
+    grafica <- function(documento , n_hoja , n_col){
 
-        # draw the histogram with the specified number of bins
-        hist(x, breaks = bins, col = 'darkgray', border = 'white')
+        d <- documento %>%
+            read_excel(sheet = hoja(documento , n_hoja))
+
+        g <- ggplot(d , aes(d %>% .[[1]] , d %>% .[[n_col]])) +
+            geom_boxplot()
+
+        ggplotly(g)
+    }
+
+    output$plot <- renderPlotly({
+
+        grafica(input$archivo$datapath , input$n_hoja , input$n_col)
 
     })
 
