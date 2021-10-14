@@ -8,22 +8,29 @@ library(plotly)
 shinyServer(function(input, output) {
 
 
-
-
-    output$plot <- renderPlotly({
-
+    accion_grafica <-  eventReactive(input$go , {
         grafica(input$archivo$datapath ,
                 input$n_hoja ,
                 input$n_col ,
                 input$nombre ,
                 input$eje_y)
+    })
+
+    accion_analisis <- eventReactive(input$go , {
+        analisis(input$archivo$datapath ,
+                 input$n_hoja ,
+                 input$n_col)
+    })
+
+    output$plot <- renderPlotly({
+        if(input$tabset == "Plot")
+        accion_grafica()
 
     })
 
     output$t_anova <- renderPrint({
-        analisis(input$archivo$datapath ,
-                 input$n_hoja ,
-                 input$n_col)
+        if(input$tabset == "Inference")
+        accion_analisis()
     })
 
 
