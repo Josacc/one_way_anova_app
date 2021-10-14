@@ -9,7 +9,7 @@ shinyUI(fluidPage(
     titlePanel("Box plot"),
 
     sidebarLayout(
-        sidebarPanel(
+        sidebarPanel(width = 2 ,
 
             fileInput("archivo" ,
                       'Selecionar archivo ".xlsx"' ,
@@ -25,42 +25,23 @@ shinyUI(fluidPage(
                          "Número de columna" ,
                          value = 2 ,
                          min = 2 ,
-                         max = 7)
+                         max = 7) ,
+
+            textInput("nombre" ,
+                      label = "Nombre del gráfico") ,
+
+            textInput("eje_y" ,
+                      "Nombre del eje y")
         ),
 
         mainPanel(
+
+            verbatimTextOutput("t_anova") ,
+
             plotlyOutput("plot")
         )
     )
 ))
-
-
-
-
-
-
-
-
-
-
-
-#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
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
