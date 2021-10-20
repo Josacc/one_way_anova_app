@@ -10,8 +10,14 @@ shinyUI(fluidPage(
 
     sidebarLayout(
         sidebarPanel(width = 3 ,
+            radioButtons(
+               "tipo_archivo" ,
+               "file type" ,
+               choices = c("xlsx" , "csv") ,
+               inline = T
+            ) ,
             fileInput("archivo" ,
-                      "file type '.xlsx'" ,
+                      NULL ,
                       accept = ".xlsx") ,
             fluidRow(
                 column(
@@ -33,8 +39,32 @@ shinyUI(fluidPage(
                                  max = 7) ,
                 )
             ) ,
+            actionButton(
+                inputId = "go" ,
+                "Go"
+            ),
             hr() ,
             tabsetPanel(id = "tabset" ,
+                        tabPanel("Plot" ,
+                                 br() ,
+                                 radioButtons(
+                                     "id_fun_orden" ,
+                                     "ordered by" ,
+                                     choices = c("NULL" , "mean" , "median" , "sd") ,
+                                     inline = T
+                                 ) ,
+                                 radioButtons(
+                                     "id_orden" ,
+                                     "order" ,
+                                     choices = c("ascending" , "descending") ,
+                                     inline = T
+                                 ) ,
+                                 br() ,
+                                 textInput("nombre" ,
+                                           label = "Nombre del gráfico") ,
+                                 textInput("eje_y" ,
+                                           "Nombre del eje y")
+                        ) ,
                         tabPanel("Inference" ,
                                  br() ,
                                  radioButtons(
@@ -43,20 +73,7 @@ shinyUI(fluidPage(
                                      inline = T ,
                                      choices = c("Normality" , "Homoscedasticity" , "ANOVA" , "all")
                                  )
-                        ) ,
-                        tabPanel("Plot" ,
-                                 br() ,
-                                 textInput("nombre" ,
-                                           label = "Nombre del gráfico") ,
-
-                                 textInput("eje_y" ,
-                                           "Nombre del eje y")
                         )
-            ) ,
-            hr() ,
-            actionButton(
-                inputId = "go" ,
-                "Go"
             )
         ) ,
         mainPanel(

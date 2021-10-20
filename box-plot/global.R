@@ -16,11 +16,13 @@ grafica <- function(documento , n_hoja , n_col , nombre , eje_y){
     read_excel(sheet = hoja(documento , n_hoja))
 
   g <- ggplot(d , aes(d %>% .[[1]] , d %>% .[[n_col]])) +
-    geom_boxplot() +
+    geom_boxplot(aes(color = d %>% .[[1]])) +
     ggtitle(nombre) +
     labs(x = "" , y = eje_y)
 
-  ggplotly(g)
+  g %>%
+    ggplotly() %>%
+    layout(legend = list(orientation = 'h' , y = -0.1 , title=list(text='<b> treatments </b>')))
 }
 
 analisis <- function(documento , n_hoja , n_col){
