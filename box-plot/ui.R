@@ -10,6 +10,13 @@ shinyUI(fluidPage(
 
     sidebarLayout(
         sidebarPanel(width = 3 ,
+            radioButtons(
+                "tipo_archivo" ,
+                "Select type file" ,
+                choices = c("xlsx" , "csv") ,
+                inline = T
+            )   ,
+
             fileInput("archivo" ,
                       "select file" ,
                       accept = c(".xlsx" , ".csv")) , #aceptar csv
@@ -36,7 +43,7 @@ shinyUI(fluidPage(
                 inputId = "go" ,
                 "Go"
             ),
-            hr() ,
+            hr()  ,
             tabsetPanel(id = "tabset" ,
                         tabPanel("Plot" ,
                                  br() ,
