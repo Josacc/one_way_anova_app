@@ -15,8 +15,7 @@ shinyUI(fluidPage(
                 "Select type file" ,
                 choices = c("xlsx" , "csv") ,
                 inline = T
-            )   ,
-
+            ) ,
             fileInput("archivo" ,
                       "select file" ,
                       accept = c(".xlsx" , ".csv")) , #aceptar csv
