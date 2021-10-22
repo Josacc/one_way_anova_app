@@ -6,31 +6,24 @@ library(plotly)
 
 shinyUI(fluidPage(
 
-    titlePanel("Box plot"),
+    titlePanel("One-way ANOVA"),
 
     sidebarLayout(
         sidebarPanel(width = 3 ,
-            radioButtons(
-               "tipo_archivo" ,
-               "file type" ,
-               choices = c("xlsx" , "csv") ,
-               inline = T
-            ) ,
             fileInput("archivo" ,
-                      NULL ,
-                      accept = ".xlsx") ,
-            fluidRow(
-                column(
-                    width = 5 ,
+                      "select file" ,
+                      accept = c(".xlsx" , ".csv")) , #aceptar csv
+            tabsetPanel(
+                id = "excel" ,
+                type = "hidden" ,
+                tabPanel(
+                    "xlsx" ,
                     numericInput("n_hoja" ,
                                  "sheet" ,
                                  width = '80px' ,
                                  value = 1 ,
                                  min = 1 ,
-                                 max = 2)
-                ) ,
-                column(
-                    width = 5 ,
+                                 max = 2) ,
                     numericInput("n_col" ,
                                  "col" ,
                                  width = '80px' ,
@@ -61,9 +54,9 @@ shinyUI(fluidPage(
                                  ) ,
                                  br() ,
                                  textInput("nombre" ,
-                                           label = "Nombre del gráfico") ,
+                                           label = "graphic title ") ,
                                  textInput("eje_y" ,
-                                           "Nombre del eje y")
+                                           "Y axis title")
                         ) ,
                         tabPanel("Inference" ,
                                  br() ,

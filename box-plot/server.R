@@ -1,11 +1,10 @@
-library(tidyverse)
 library(shiny)
-library(readxl)
 library(plotly)
 
 
 
-shinyServer(function(input, output) {
+shinyServer(function(input, output , session) {
+
 
 
     accion_grafica <-  eventReactive(input$go , {
