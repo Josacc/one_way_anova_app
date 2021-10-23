@@ -10,13 +10,12 @@ hoja <- function(documento , n_hoja){
      excel_sheets())[n_hoja]
 }
 
-grafica <- function(documento , n_hoja , n_col , nombre , eje_y){
 
-  d <- documento %>%
-    read_excel(sheet = hoja(documento , n_hoja))
+
+grafica <- function(d , n_hoja , n_col , nombre , eje_y){
 
   g <- ggplot(d , aes(d %>% .[[1]] , d %>% .[[n_col]])) +
-    geom_boxplot(aes(color = d %>% .[[1]])) +
+    geom_boxplot(aes(color = d %>% .[[1]]) , na.rm = T) +
     ggtitle(nombre) +
     labs(x = "" , y = eje_y)
 
