@@ -24,10 +24,9 @@ grafica <- function(d , n_hoja , n_col , nombre , eje_y){
     layout(legend = list(orientation = 'h' , y = -0.1 , title=list(text='<b> treatments </b>')))
 }
 
-analisis <- function(documento , n_hoja , n_col){
-
-  d <- documento %>%
-    read_excel(sheet = n_hoja)
+analisis <- function(d , n_col){
+  d <- d %>%
+    filter(!is.na(d))
 
   shapiro <- d[[1]] %>%
     unique() %>%

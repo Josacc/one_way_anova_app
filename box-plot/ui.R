@@ -11,32 +11,32 @@ shinyUI(fluidPage(
     sidebarLayout(
         sidebarPanel(width = 3 ,
             fileInput("archivo" ,
-                      "select file 'csv' or 'xlsx'" ,
+                      "select file csv or xlsx" ,
                       accept = c(".xlsx" , ".csv")) ,
-            tabsetPanel(
-                id = "excel" ,
-                type = "hidden" ,
-                tabPanel(
-                    "xlsx" ,
-                    numericInput("n_hoja" ,
-                                 "sheet" ,
-                                 width = '80px' ,
-                                 value = 1 ,
-                                 min = 1 ,
-                                 max = 2) ,
-                    numericInput("n_col" ,
-                                 "col" ,
-                                 width = '80px' ,
-                                 value = 2 ,
-                                 min = 2 ,
-                                 max = 7) ,
+            fluidRow(
+                column(
+                    width = 5 ,
+                    numericInput(
+                        "n_hoja" ,
+                        "sheet" ,
+                        width = '80px' ,
+                        value = 1 ,
+                        min = 1 ,
+                        max = 2
+                    )
+                ) ,
+                column(
+                    width = 5 ,
+                    numericInput(
+                        "n_col" ,
+                        "col" ,
+                        width = '80px' ,
+                        value = 2 ,
+                        min = 2 ,
+                        max = 7
+                    )
                 )
             ) ,
-            actionButton(
-                inputId = "go" ,
-                "Go"
-            ),
-            hr()  ,
             tabsetPanel(id = "tabset" ,
                         tabPanel("Plot" ,
                                  br() ,
@@ -70,6 +70,10 @@ shinyUI(fluidPage(
             )
         ) ,
         mainPanel(
+            actionButton(
+                inputId = "go" ,
+                "Go"
+            ),
             verbatimTextOutput("t_anova") ,
             plotlyOutput("plot")
         )
