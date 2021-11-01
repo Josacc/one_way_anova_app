@@ -61,7 +61,7 @@ shinyUI(fluidPage(
                         tabPanel("Inference" ,
                                  br() ,
                                  radioButtons(
-                                     inputId = "selccion" ,
+                                     inputId = "selection" ,
                                      "select" ,
                                      inline = T ,
                                      choices = c("Normality" , "Homoscedasticity" , "ANOVA" , "all")

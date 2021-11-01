@@ -13,7 +13,8 @@ shinyServer(function(input, output) {
         req(archivo)
         validate(need(ext == "csv" | ext == "xlsx" , "Please upload a csv or xlsx file"))
         if(ext == "csv"){
-            d <- read_csv(archivo$datapath)
+            d <- archivo$datapath %>%
+                read_csv()
         }else(d <- archivo$datapath %>%
                   read_excel(sheet = hoja(archivo$datapath , input$n_hoja))
         )
@@ -24,20 +25,46 @@ shinyServer(function(input, output) {
                 input$eje_y)
     })
 
-    accion_analisis <- eventReactive(input$go , {
+    # accion_analisis <- eventReactive(input$go , {
+    #     archivo <- input$archivo
+    #     ext <-  tools::file_ext(archivo$datapath)
+    #     req(archivo)
+    #     validate(need(ext == "csv" | ext == "xlsx" , "Please upload a csv or xlsx file"))
+    #     if(ext == "csv"){
+    #         d <- archivo$datapath %>%
+    #             read_csv()
+    #         d <- d %>%
+    #             filter(!is.na(d))
+    #     }else(d <- archivo$datapath %>%
+    #               read_excel(sheet = hoja(archivo$datapath , input$n_hoja))
+    #     )
+    #     analisis(d ,
+    #              input$n_col)
+#
+#     })
+
+    analysis_type <- eventReactive(input$go , {
         archivo <- input$archivo
         ext <-  tools::file_ext(archivo$datapath)
         req(archivo)
         validate(need(ext == "csv" | ext == "xlsx" , "Please upload a csv or xlsx file"))
         if(ext == "csv"){
-            d <- read_csv(archivo$datapath)
+            d <- archivo$datapath %>%
+                read_csv()
+            d <- d %>%
+                filter(!is.na(d))
         }else(d <- archivo$datapath %>%
                   read_excel(sheet = hoja(archivo$datapath , input$n_hoja))
         )
-        analisis(d ,
-                 input$n_col)
-
+        switch(
+            input$selection ,
+            Normality = shapiro(d , input$n_col) ,
+            Homoscedasticity = bar(d , input$n_col) ,
+            ANOVA = an(d , input$n_col) ,
+            all = analisis(d , input$n_col)
+        )
     })
+
 
     output$plot <- renderPlotly({
         if(input$tabset == "Plot")
@@ -47,7 +74,7 @@ shinyServer(function(input, output) {
 
     output$t_anova <- renderPrint({
         if(input$tabset == "Inference")
-        accion_analisis()
+        analysis_type()
     })
 
 

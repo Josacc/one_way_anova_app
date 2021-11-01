@@ -10,8 +10,6 @@ hoja <- function(documento , n_hoja){
      excel_sheets())[n_hoja]
 }
 
-
-
 grafica <- function(d , n_hoja , n_col , nombre , eje_y){
 
   g <- ggplot(d , aes(d %>% .[[1]] , d %>% .[[n_col]])) +
@@ -24,17 +22,32 @@ grafica <- function(d , n_hoja , n_col , nombre , eje_y){
     layout(legend = list(orientation = 'h' , y = -0.1 , title=list(text='<b> treatments </b>')))
 }
 
-analisis <- function(d , n_col){
-  d <- d %>%
-    filter(!is.na(d))
-
-  shapiro <- d[[1]] %>%
+shapiro <- function(d , n_col){
+  d[[1]] %>%
     unique() %>%
     sapply(function(x)(d %>% filter(d[[1]] == x))[[n_col]] %>% shapiro.test())
+}
 
-  an <- aov(d[[n_col]] ~ d[[1]]) %>%
+bar <- function(d , n_col){
+  bartlett.test(d[[n_col]] ~ d[[1]])
+}
+
+an <- function(d , n_col){
+  print("ANOVA")
+  aov(d[[n_col]] ~ d[[1]]) %>%
     summary()
+}
 
-  print(shapiro) ; print(an)
+analisis <- function(d , n_col){
+
+  print(shapiro(d , n_col))
+  print(bar(d , n_col))
+  print(an(d , n_col))
 
 }
+
+
+
+
+
+
