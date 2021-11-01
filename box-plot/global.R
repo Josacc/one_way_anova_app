@@ -22,6 +22,68 @@ grafica <- function(d , n_hoja , n_col , nombre , eje_y){
     layout(legend = list(orientation = 'h' , y = -0.1 , title=list(text='<b> treatments </b>')))
 }
 
+g_as_mean <- function(d , n_hoja , n_col , nombre , eje_y){
+  g <- ggplot(d , aes(reorder(d %>% .[[1]] , d %>% .[[n_col]] , FUN = mean)  , d %>% .[[n_col]])) +
+    geom_boxplot(aes(color = d %>% .[[1]]) , na.rm = T) +
+    ggtitle(nombre) +
+    labs(x = "" , y = eje_y)
+  g %>%
+    ggplotly() %>%
+    layout(legend = list(orientation = 'h' , y = -0.1 , title=list(text='<b> treatments </b>')))
+}
+
+g_des_mean <- function(d , n_hoja , n_col , nombre , eje_y){
+  g <- ggplot(d , aes(reorder(d %>% .[[1]] , desc(d %>% .[[n_col]]) , FUN = mean)  , d %>% .[[n_col]])) +
+    geom_boxplot(aes(color = d %>% .[[1]]) , na.rm = T) +
+    ggtitle(nombre) +
+    labs(x = "" , y = eje_y)
+  g %>%
+    ggplotly() %>%
+    layout(legend = list(orientation = 'h' , y = -0.1 , title=list(text='<b> treatments </b>')))
+}
+
+g_as_median <- function(d , n_hoja , n_col , nombre , eje_y){
+  g <- ggplot(d , aes(reorder(d %>% .[[1]] , d %>% .[[n_col]] , FUN = median)  , d %>% .[[n_col]])) +
+    geom_boxplot(aes(color = d %>% .[[1]]) , na.rm = T) +
+    ggtitle(nombre) +
+    labs(x = "" , y = eje_y)
+  g %>%
+    ggplotly() %>%
+    layout(legend = list(orientation = 'h' , y = -0.1 , title=list(text='<b> treatments </b>')))
+}
+
+g_des_median <- function(d , n_hoja , n_col , nombre , eje_y){
+  g <- ggplot(d , aes(reorder(d %>% .[[1]] , desc(d %>% .[[n_col]]) , FUN = median)  , d %>% .[[n_col]])) +
+    geom_boxplot(aes(color = d %>% .[[1]]) , na.rm = T) +
+    ggtitle(nombre) +
+    labs(x = "" , y = eje_y)
+  g %>%
+    ggplotly() %>%
+    layout(legend = list(orientation = 'h' , y = -0.1 , title=list(text='<b> treatments </b>')))
+}
+
+g_as_sd <- function(d , n_hoja , n_col , nombre , eje_y){
+  g <- ggplot(d , aes(reorder(d %>% .[[1]] , d %>% .[[n_col]] , FUN = function(x){sd(x)})  , d %>% .[[n_col]])) +
+    geom_boxplot(aes(color = d %>% .[[1]]) , na.rm = T) +
+    ggtitle(nombre) +
+    labs(x = "" , y = eje_y)
+  g %>%
+    ggplotly() %>%
+    layout(legend = list(orientation = 'h' , y = -0.1 , title=list(text='<b> treatments </b>')))
+}
+
+g_des_sd <- function(d , n_hoja , n_col , nombre , eje_y){
+  g <- ggplot(d , aes(reorder(d %>% .[[1]] , desc(d %>% .[[n_col]]) , FUN = function(x){sd(x)})  , d %>% .[[n_col]])) +
+    geom_boxplot(aes(color = d %>% .[[1]]) , na.rm = T) +
+    ggtitle(nombre) +
+    labs(x = "" , y = eje_y)
+  g %>%
+    ggplotly() %>%
+    layout(legend = list(orientation = 'h' , y = -0.1 , title=list(text='<b> treatments </b>')))
+}
+
+
+
 shapiro <- function(d , n_col){
   d[[1]] %>%
     unique() %>%

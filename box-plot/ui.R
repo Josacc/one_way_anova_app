@@ -41,13 +41,13 @@ shinyUI(fluidPage(
                         tabPanel("Plot" ,
                                  br() ,
                                  radioButtons(
-                                     "id_fun_orden" ,
+                                     "id_fun_order" ,
                                      "ordered by" ,
                                      choices = c("NULL" , "mean" , "median" , "sd") ,
                                      inline = T
                                  ) ,
                                  radioButtons(
-                                     "id_orden" ,
+                                     "id_order" ,
                                      "order" ,
                                      choices = c("ascending" , "descending") ,
                                      inline = T
